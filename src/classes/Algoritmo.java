@@ -1,8 +1,8 @@
 package classes;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /*
  *	Descrição: Classe responsável pela execução do algoritmo
@@ -17,7 +17,6 @@ public class Algoritmo {
 	 *	@Comst DISTMAXTRABMOT :	Distância máxima em KM que o motorista pode executar sem que seja contado como extra.
 	 */
 	public enum CONSTANTES{
-		NUMMOTORISTAS(3),
 		CUSTOKMNORMAL(1),
 		CUSTOKMEXTRA(2),
 		DISTMAXTRABMOT(90);
@@ -35,14 +34,17 @@ public class Algoritmo {
 	
 	private List<Integer> ls;				//Solução boa que será usada no algoritmo de backtraking
 	
+	private Scanner sc;						//Objeto para gerenciar a leitura do teclado
 	/*
 	 *	Descrição: Construtor da classe
 	 */
 	public Algoritmo(){
-		
+			
 		//Iniciando atributos
 		this.percursos = new ArrayList<Percurso>();
-		this.motoristas = new ArrayList<Motorista>();	
+		this.motoristas = new ArrayList<Motorista>();
+		this.sc =  new Scanner(System.in);
+		
 	}
 
 	/*
@@ -53,18 +55,57 @@ public class Algoritmo {
 		//Escolhendo execução personalizada ou execução de casos de testes
 		switch(inicio()){
 			case 1:	//Execução de casos de testes
-				executar();
+				casosDeTestes();
 			break;	
 			case 2: //Execução personalizada
-				determinarInstancias();
+				definirValores();
 			break;
 		}
+		
+		executar();
+		
+		sc.close();
 	}
-	/*
-	 *	Descrição: Determina as instâncias necessárias para uma execução personalizada do algoritmo
-	 */
-	private void determinarInstancias() {
-		// TODO Auto-generated method stub
+
+	//Métodos com o caso de testes
+	private void casosDeTestes() {
+		
+		int escolha=0;
+			
+		do{
+			System.out.println("Escolha uma das opções abaixo:");
+			System.out.println("1 - Teste 1");
+			System.out.println("2 - Teste 2");
+			System.out.println("3 - Teste 3");
+			System.out.print("-> ");
+					
+			try {
+				escolha = sc.nextInt();
+			} catch (Exception e) {
+				escolha=0;
+			}
+			
+			//Aumentando espaçamento
+			System.out.println("");
+			
+		}while(escolha<1 || escolha>3);	
+				
+		switch(escolha){
+			case 1:
+				//Instâncias do teste 1
+				criarMot(3);
+				criarPerEstatico(5);
+			break;
+			case 2:
+				//Instâncias do teste 2
+				criarMot(5);
+				criarPerEstatico(10);
+			break;
+			case 3:
+				criarMot(10);
+				criarPerEstatico(7);
+			break;	
+		}
 		
 	}
 
@@ -72,10 +113,6 @@ public class Algoritmo {
 	 *	Descrição: Método para execução principal do algoritmo
 	 */
 	private void executar() {
-		
-		//Definição da quantidade de motoristas e percursos para a execução do caso de testes
-		criarMot(3);			//Quantidade de motoristas
-		criarPerEstatico(5);	//Quantidade de percursos
 		
 		//-------------------------------------------------------------------------
 		
@@ -91,7 +128,7 @@ public class Algoritmo {
 		
 		System.out.println("--------------------------------------------");
 		
-		System.out.println("Solucao");
+		System.out.println("Solução");
 		
 		System.out.println("--------------------------------------------");
 		
@@ -164,28 +201,25 @@ public class Algoritmo {
 	public int inicio(){
 		//Variável que obterá a escolha definida pelo usuário
 		int escolha=0;
-		
+	
 		//Solicita ao usuário que escolha a opção, repetindo até que ele use uma resolução aceitável
 		do{
-			System.out.println("Software para encontra a melhor solução de alocação de motorista");
+			System.out.println("Software para encontra a melhor solução de alocação de motorista\n");
 			System.out.println("Escolha uma das opções abaixo:");
 			System.out.println("1 - Usar casos de testes feitos");
 			System.out.println("2 - Usar casos de testes novos");
-			System.out.print("->");
-			
+			System.out.print("-> ");
+					
 			try {
-				escolha = System.in.read() -'0';
-			} catch (IOException e) {
-				//Excessão caso der algum erro na operação de entrada
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				escolha = sc.nextInt();
+			} catch (Exception e) {
+				escolha=0;
 			}
 			
-			//Aumentando espaçamento
 			System.out.println("");
 			
 		}while(escolha<1 || escolha>2);	
-		
+			
 		//Retorno da escolha feita pelo usuário
 		return escolha;
 	}
@@ -195,15 +229,16 @@ public class Algoritmo {
 	 */
 	private void definirValores() {
 		int escolha =0;
+
 		//Definindo quantidade de motoristas
 		do{
 			System.out.println("Quantidade de motoristas(Número natural maior que 0):");
-			System.out.print("->");
+			System.out.print("-> ");
+			
 			try {
-				escolha = System.in.read()-'0';
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				escolha = sc.nextInt();
+			} catch (Exception e) {
+				escolha = 0;
 			}
 			
 			//Aumentando espaçamento
@@ -217,38 +252,89 @@ public class Algoritmo {
 		escolha=0;
 		//Definindo quantidade de percursos
 		do{
-			System.out.println("Quantidade de percursos(Número natural maior que 0):");
-			System.out.print("->");
+			System.out.println("Quantidade de percursos (Número natural maior que 0):");
+			System.out.print("-> ");
+			
 			try {
-				escolha = System.in.read()-'0';
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				escolha = sc.nextInt();
+			} catch (Exception e) {
+				escolha=0;
 			}
 			
 			//Aumentando espaçamento
 			System.out.println("");
 		
 		}while(escolha<1 || escolha>=Integer.MAX_VALUE);
-		
+				
 		preencherPercurso(escolha);
 		
 	}
-
+	/*
+	 *	Descrição: Definir as distâncias de cada percurso
+	 *	
+	 *	@params int : Quantidade de percursos a serem usados
+	 */
 	private void preencherPercurso(int escolha) {
-		// TODO Auto-generated method stub
-		do{
-			System.out.println("Usar valores:");
-			System.out.print("->");
-			try {
-				escolha = System.in.read()-'0';
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		
+		int segEscolha=0;
+		
+		// 20  = Quantidade de percursos estáticos existentes
+		if(escolha<=20){
+			do{
+				System.out.println("Usar valores para distâncias já existentes:");
+				System.out.println("1 - Sim");
+				System.out.println("2 - Não");
+				System.out.print("-> ");
+				
+				try {
+					segEscolha = sc.nextInt();
+				} catch (Exception e) {
+					segEscolha=0;
+				}
+			}while(segEscolha<1 || segEscolha>2);
+			
+			//Definindo ação de acordo com escolha do usuário
+			switch(segEscolha){
+				case 1:
+					//Usa valores estáticos na definição das distâncias dos percursos
+					criarPerEstatico(escolha);
+				break;
+				case 2:
+					//Criar novos percursos
+					criarPercusos(escolha);
+				break;	
 			}
-		}while(escolha<1 || escolha>=Integer.MAX_VALUE);
+			
+		}else{
+			//Criar novos percursos
+			criarPercusos(escolha);
+		}	
 	}
 		
+	/*
+	 *	Descrição: Método para determinar novas instâncias
+	 *
+	 * 	@params int : Quantidade de percursos
+	 */
+	private void criarPercusos(int escolha) {
+		
+		int distancia=0;
+		
+		for(int i=0;i<escolha;i++){
+			
+			do{
+				System.out.print("Defina a distância do percurso " + i + ": " );
+				try {
+					distancia = sc.nextInt();
+				} catch (Exception e) {
+					escolha=0;
+				}
+			}while(distancia<1 || distancia >=Integer.MAX_VALUE);
+
+			percursos.add(new Percurso(distancia));
+		}
+	}
+
 	/*
 	 *	Descrição: Método com valores estáticos de percurso
 	 *	
@@ -311,7 +397,7 @@ public class Algoritmo {
 				lMot.add(motoristas.get(i).getIndice());
 				
 				//Verificando se a lista atual  tem custo maior que a boa solução calculada anteriormente
-				if(calcularCusto(lMot)<calcularCusto(ls)){
+				if(calcularCusto(lMot)<=calcularCusto(ls)){
 					
 					lista.add(backtraking(lMot));				
 				}else{
@@ -344,17 +430,28 @@ public class Algoritmo {
 		}	
 	}	
 	
-	
+	/*
+	 *	Descrição: Algoritmo para encontrar uma solução muito boa para o problema
+	 *	
+	 *	@params List<Integer> : Lista na qual precisamos complementar com motoristas
+	 *
+	 *	@return List<Integer> : Lista com uma boa solução para o problema
+	 */
 	public List<Integer> custoQuaseMinimo(List<Integer> m){
-
+		
+		//Lista que será retornada com a solução
 		List<Integer> lM = new ArrayList<Integer>(m);
-			
+		
+		//Lista de precedência(	Quanto menor o valor, maior a precedência)
 		List<Double> precedencia;
 		
+		//Enquanto eu não obter uma solução 
 		while(lM.size()!=percursos.size()){
-		
+			
+			//Verifica a precedência dos candidatos a realizar o percurso
 			precedencia = denotarPrecedencia(adicionarDistanciasMotoristas(lM), lM.size());
-		
+			
+			//Adiciona o candidato de maior precedência para realizar o percurso.
 			lM.add(encontrarIndiceComMenorValor(precedencia));
 			
 		}
@@ -362,10 +459,20 @@ public class Algoritmo {
 		return lM;
 	}
 	
+	/*
+	 *	Descrição: Algoritmo para encontrar o indice do motorista com o menor valor (Maior precedência)
+	 *
+	 *	@params List<Integer> : Lista com as precedências de cada motorista
+	 *
+	 *	@return int : Indice do motorista que tem maior precedência (menor valor na lista de entrada)
+	 */
 	private int encontrarIndiceComMenorValor(List<Double> precedencia) {
+		
+		//Iniciando variáveis
 		double valor=Double.MAX_VALUE;
 		int indice=-1;
 		
+		//Encontrando o indice de maior precedência
 		for(int i=0;i<precedencia.size();i++){
 			if(precedencia.get(i)<valor){
 				valor = precedencia.get(i);
