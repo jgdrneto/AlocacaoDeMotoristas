@@ -102,8 +102,8 @@ public class Algoritmo {
 				criarPerEstatico(10);
 			break;
 			case 3:
-				criarMot(10);
-				criarPerEstatico(7);
+				criarMot(7);
+				criarPerEstatico(9);
 			break;	
 		}
 		
@@ -132,17 +132,29 @@ public class Algoritmo {
 		
 		System.out.println("--------------------------------------------");
 		
+		//Definindo tempo de execução
+		
+		//Tempo de inicio de execução
+		long inicio = System.currentTimeMillis();
+		
 		//Realizar método que retorna uma boa solução(nem sempre a melhor) para o problema.
 		ls = custoQuaseMinimo(new ArrayList<Integer>());
-		
-		//Imprimindo uma solução boa para o problema com as instâncias informadas
-		System.out.println("Solução Boa: " + ls.toString() + " Custo: " + calcularCusto(ls)) ;
 				
 		//Encontrando a melhor solução com backtraking com poldas por meio da ajuda da solução boa
 		List<Integer> solucaoOtima = backtraking(new ArrayList<Integer>());
 		
+		//Tempo total de execução
+		long tempoExecucao = System.currentTimeMillis() - inicio;
+		
+		//Imprimindo uma solução boa para o problema com as instâncias informadas
+		System.out.println("Solução Boa: " + ls.toString() + " Custo: " + calcularCusto(ls)) ;
+		
 		//Imprimindo uma solução ótima para o problema com as instâncias informadas
 		System.out.println("Solução Ótima: " + solucaoOtima.toString() + " Custo: " + calcularCusto(solucaoOtima)) ;
+		
+		System.out.println("--------------------------------------------");
+		
+		System.out.println("Tempo de execução em milisegundos: " + tempoExecucao);
 	}
 	
 	/*
@@ -486,10 +498,10 @@ public class Algoritmo {
 	/*
 	 *	Descrição:
 	 *
-	 *	@params List<Motorista> : Lista de motorista para que possam ser realizadas as respectivas precedencias na alocação do percurso
+	 *	@params List<Motorista> : Lista de motorista para que possam ser realizadas as respectivas precedências na alocação do percurso
 	 *	@params int : Percurso a ser definido o melhor motorista a fazê-lo
 	 *
-	 *	@return List<Double> : As precedencias de cada motorista a realizar o percurso
+	 *	@return List<Double> : As precedências de cada motorista a realizar o percurso
 	 */
 	private List<Double> denotarPrecedencia(List<Motorista> motoristas, int p) {
 		
@@ -498,12 +510,9 @@ public class Algoritmo {
 		
 		//Verifica para cada motorista
 		for(Motorista m : motoristas){
-			/*
-			System.out.println("Ja percorrido:" + m.getDistPercorrida());
-			System.out.println("Percurso:" + percursos.get(p).getDistancia());
-			*/
+
 			//Se a distancia do percurso + a distância já feita pelo motorista dê igual a quantidade de distância máxima sem custos extras, esse motorista tem precedência em relação aos outros
-			if(m.getDistPercorrida()+percursos.get(p).getDistancia()==CONSTANTES.DISTMAXTRABMOT.VALOR){
+			if(m.getDistPercorrida()+percursos.get(p).getDistancia() == CONSTANTES.DISTMAXTRABMOT.VALOR){
 				precedencia.add(0.0);
 			}else{
 				//Valores significa o quanto falta/excede para o motorista percorrer a distância máxima 
@@ -513,7 +522,6 @@ public class Algoritmo {
 			m.setDistPercorrida(0);
 		}
 			
-		//System.out.println("Precedencia:" + precedencia.toString());
 		//Retornando precedencia (Neste caso, maior precedencia é definida pelo menor valor)
 		return new ArrayList<Double>(precedencia);
 	}
