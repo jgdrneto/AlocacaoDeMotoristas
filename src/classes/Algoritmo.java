@@ -134,27 +134,37 @@ public class Algoritmo {
 		
 		//Definindo tempo de execução
 		
-		//Tempo de inicio de execução
-		long inicio = System.currentTimeMillis();
+		//Tempo de inicio de execução da heurística
+ 		long inicio = System.currentTimeMillis();
 		
 		//Realizar método que retorna uma boa solução(nem sempre a melhor) para o problema.
 		ls = custoQuaseMinimo(new ArrayList<Integer>());
-				
-		//Encontrando a melhor solução com backtraking com poldas por meio da ajuda da solução boa
-		List<Integer> solucaoOtima = backtraking(new ArrayList<Integer>());
 		
-		//Tempo total de execução
+		//Tempo total de execução da heurística
 		long tempoExecucao = System.currentTimeMillis() - inicio;
 		
 		//Imprimindo uma solução boa para o problema com as instâncias informadas
 		System.out.println("Solução Boa: " + ls.toString() + " Custo: " + calcularCusto(ls)) ;
 		
-		//Imprimindo uma solução ótima para o problema com as instâncias informadas
-		System.out.println("Solução Ótima: " + solucaoOtima.toString() + " Custo: " + calcularCusto(solucaoOtima)) ;
+		System.out.println("Tempo de execução em milisegundos: " + tempoExecucao);
 		
 		System.out.println("--------------------------------------------");
 		
+		//Tempo de inicio de execução da solução ótima
+ 		inicio = System.currentTimeMillis();
+ 		
+		//Encontrando a melhor solução com backtraking com poldas por meio da ajuda da solução boa
+		List<Integer> solucaoOtima = backtraking(new ArrayList<Integer>());
+		
+		//Tempo total de execução da solução ótima
+		tempoExecucao = System.currentTimeMillis() - inicio;
+		
+		//Imprimindo uma solução ótima para o problema com as instâncias informadas
+		System.out.println("Solução Ótima: " + solucaoOtima.toString() + " Custo: " + calcularCusto(solucaoOtima)) ;
+		
 		System.out.println("Tempo de execução em milisegundos: " + tempoExecucao);
+
+		System.out.println("--------------------------------------------");
 	}
 	
 	/*
@@ -165,10 +175,10 @@ public class Algoritmo {
 		
 		for(int i=0;i<percursos.size();i++){
 			
-			s+= "Percurso " + i + " : " + percursos.get(i).getDistancia() + "";
+			s+= "Percurso " + (i+1) + " : " + percursos.get(i).getDistancia() + "";
 			
 			if(i!=percursos.size()-1){
-				s+=" ,";
+				s+=", ";
 			}
 			
 		}
@@ -393,8 +403,8 @@ public class Algoritmo {
 	 *	@return List<Integer> : Lista com uma solução para o problema de alocação de motorista
 	 */
 	public List<Integer> backtraking(List<Integer> lMot){
-		
-		//Se eu tiver todos os percursos com motoristas
+
+		 //Se eu tiver todos os percursos com motoristas
 		if(lMot.size()==percursos.size()){
 			//Retornando uma solução
 			return new ArrayList<Integer>(lMot);
@@ -409,12 +419,12 @@ public class Algoritmo {
 				lMot.add(motoristas.get(i).getIndice());
 				
 				//Verificando se a lista atual  tem custo maior que a boa solução calculada anteriormente
-				if(calcularCusto(lMot)<=calcularCusto(ls)){
+				if(calcularCusto(custoQuaseMinimo(lMot))<=calcularCusto(ls)){
 					
 					lista.add(backtraking(lMot));				
 				}else{
 					//Se a solução feita anterior é melhor, ela que será retornada (polda da árvore)
-					lista.add(ls);
+					lista.add(custoQuaseMinimo(lMot));
 				}
 				
 				//Excluindo item da lista
