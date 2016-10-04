@@ -418,12 +418,13 @@ public class Algoritmo {
 				//Adiciando motorista a lista de solução
 				lMot.add(motoristas.get(i).getIndice());
 				
-				//Verificando se a lista atual  tem custo maior que a boa solução calculada anteriormente
+				//Verificando se o limite minimo da lista atual tem menor ou igual a boa solução calculada anteriormente
 				if(calcularCusto(custoQuaseMinimo(lMot))<=calcularCusto(ls)){
 					
 					lista.add(backtraking(lMot));				
 				}else{
-					//Se a solução feita anterior é melhor, ela que será retornada (polda da árvore)
+
+					//Se a solução encontrada com a lista atual é igual que a solução da heurística, ela que será retornada (polda da árvore)
 					lista.add(custoQuaseMinimo(lMot));
 				}
 				
@@ -549,11 +550,7 @@ public class Algoritmo {
 		List<Motorista> motoristasLim = new ArrayList<Motorista>(this.motoristas);
 		
 		for(int i=0;i<lMot.size();i++){
-			/*
-			System.out.println("indice: "+ lMot.get(i));
-			System.out.println("Motorista: " + motoristas.get(lMot.get(i)).getDistPercorrida());
-			System.out.println("Percursos:" + percursos.get(i).getDistancia());
-			*/
+			//Adicionando distância percorrida ao motorista que tiver o mesmo índice que o presente no lMot.get(i)
 			motoristasLim.get(lMot.get(i)).setDistPercorrida(motoristasLim.get(lMot.get(i)).getDistPercorrida()+percursos.get(i).getDistancia());
 		}
 			
@@ -572,11 +569,6 @@ public class Algoritmo {
 		
 		//Conseguindo o custo de cada motorista
 		for(int i=0;i<lMot.size();i++){
-			/*
-			System.out.println("indice: "+ lMot.get(i));
-			System.out.println("Motorista: " + motoristas.get(lMot.get(i)).getDistPercorrida());
-			System.out.println("Percursos:" + percursos.get(i).getDistancia());
-			*/
 			//Adicionando distância percorrida ao motorista que tiver o mesmo índice que o presente no lMot.get(i)
 			motoristas.get(lMot.get(i)).setDistPercorrida(motoristas.get(lMot.get(i)).getDistPercorrida()+percursos.get(i).getDistancia());
 		}
