@@ -29,8 +29,8 @@ public class Algoritmo {
 	}
 
 	//Atributos
-	private List<Percurso> percursos;		//Lista com os percursos a serem usados no algoritmo
-	private List<Motorista> motoristas;		//Lista com os motoristas a serem usados no algoritmo
+	public List<Percurso> percursos;		//Lista com os percursos a serem usados no algoritmo
+	public List<Motorista> motoristas;		//Lista com os motoristas a serem usados no algoritmo
 	
 	private List<Integer> ls;				//Solução boa que será usada no algoritmo de backtraking
 	
@@ -220,7 +220,7 @@ public class Algoritmo {
 	/*
 	 *	Descrição: Método usado para inicio da execução do algoritmo
 	 */
-	public int inicio(){
+	private int inicio(){
 		//Variável que obterá a escolha definida pelo usuário
 		int escolha=0;
 	
@@ -402,7 +402,7 @@ public class Algoritmo {
 	 *
 	 *	@return List<Integer> : Lista com uma solução para o problema de alocação de motorista
 	 */
-	public List<Integer> backtraking(List<Integer> lMot){
+	private List<Integer> backtraking(List<Integer> lMot){
 
 		 //Se eu tiver todos os percursos com motoristas
 		if(lMot.size()==percursos.size()){
@@ -460,7 +460,7 @@ public class Algoritmo {
 	 *
 	 *	@return List<Integer> : Lista com uma boa solução para o problema
 	 */
-	public List<Integer> custoQuaseMinimo(List<Integer> m){
+	private List<Integer> custoQuaseMinimo(List<Integer> m){
 		
 		//Lista que será retornada com a solução
 		List<Integer> lM = new ArrayList<Integer>(m);
@@ -562,7 +562,7 @@ public class Algoritmo {
 	 *
 	 *	@params List<Integer> : Lista com a sequência de motorista na mesma ordem dos percursos
 	 */
-	public Integer calcularCusto(List<Integer> lMot){
+	private Integer calcularCusto(List<Integer> lMot){
 		
 		//Variável que terá o custo
 		Integer custo= new Integer(0);

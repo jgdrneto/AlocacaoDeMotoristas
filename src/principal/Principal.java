@@ -19,7 +19,7 @@ public class Principal {
 		
 		//Iniciando algoritmo
 		algoritmo.start();
-			
+		
 	}
 
 }
