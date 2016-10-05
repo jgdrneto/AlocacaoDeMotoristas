@@ -5,7 +5,7 @@
 ### José gameleira do Rêgo Neto (Email: jgdrneto@gmail.com).
 
 ## **Professor:**
-### Luis Carlos Amorim
+### Silvia Maria Diniz Monteiro Maia
 
 
 ## **Descrição:**
